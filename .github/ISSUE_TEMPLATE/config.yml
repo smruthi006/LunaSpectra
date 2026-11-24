@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project Decision Log & Open Questions
+    url: https://github.com/smruthi006/LunaSpectra/blob/main/docs/DECISION_LOG.md
+    about: Check unresolved project decisions and dataset verification items before opening a new issue.

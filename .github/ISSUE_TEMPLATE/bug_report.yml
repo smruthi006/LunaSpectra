@@ -1,0 +1,47 @@
+name: Bug Report
+description: Report a defect, schema mismatch, coordinate bug, or documentation inaccuracy in LunaSpectra.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue. Please provide clear reproduction details and verify that no secrets or raw mission data files are attached.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Area
+      options:
+        - Data Pipeline / Parsing
+        - Machine Learning / Evaluation
+        - Backend API / Database
+        - Frontend / Lunar Map
+        - Documentation / Governance
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior clearly.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands, input parameters, or files involved (use synthetic or non-sensitive identifiers).
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Verification
+      options:
+        - label: I confirmed no secrets, credentials, or raw Chandrayaan-2 archive files are included.
+          required: true

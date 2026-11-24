@@ -1,0 +1,44 @@
+name: Feature Request
+description: Propose a scoped MVP task or evaluated future extension for LunaSpectra.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to propose scoped work aligned with the MVP roadmap or an optional future extension.
+  - type: dropdown
+    id: scope_tier
+    attributes:
+      label: Scope Alignment
+      options:
+        - MVP Scope (Core 2-Credit Deliverable)
+        - Optional Future Extension (Post-MVP)
+    validations:
+      required: true
+  - type: dropdown
+    id: owner_area
+    attributes:
+      label: Primary Module
+      options:
+        - Data Acquisition & Preprocessing (Member 1)
+        - Machine Learning & Analysis (Member 2)
+        - Frontend & Lunar Map (Member 3)
+        - Backend, Database & Repo (Member 4)
+        - Cross-Cutting / Architecture
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or User Need
+      description: What analytical, engineering, or usability gap does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Design / Acceptance Criteria
+      description: List concrete deliverables and measurable acceptance criteria.
+    validations:
+      required: true

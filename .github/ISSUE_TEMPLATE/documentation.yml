@@ -1,0 +1,24 @@
+name: Documentation Update
+description: Request improvements, corrections, or clarifications to LunaSpectra documentation.
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: input
+    id: target_doc
+    attributes:
+      label: Target Document(s)
+      placeholder: e.g., docs/DATASET_GUIDE.md, README.md
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What needs to be added, clarified, or corrected?
+      description: Describe the gap, outdated statement, broken link, or scientific caveat needed.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: Supporting Primary Reference (if applicable)
+      description: Link to official ISRO/ISSDC documentation, PDS4 bundle guide, or peer-reviewed literature.
