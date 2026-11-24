@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/DATA_PIPELINE.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Proposed — Planning Phase` |
+| **Status** | `Implemented (Phase 1 Real CLASS Pipeline) — Geospatial Mapping Stages Planned for Phase 2+` |
 | **Owner** | `[Member 1 Name Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Member 2 Name Placeholder]`, `[Member 4 Name Placeholder]` |
@@ -12,7 +12,7 @@
 ---
 
 > [!NOTE]
-> This pipeline specification is **Proposed**. Implementation scripts will be added under `scripts/` and `backend/` after Phase 2 PDS4 product verification.
+> **Phase 1 Implemented Pipeline:** Acquisition (`backend/scripts/acquire_class_data.py`), file inventory (`backend/scripts/inspect_class_data.py`), Parquet processing (`backend/scripts/process_class_data.py`), and idempotent SQLite seeding (`backend/scripts/seed_database.py`) are **implemented** for the genuine Mendeley CLASS dataset (`DOI: 10.17632/6mmd96j5bg.1`). Geospatial validation and ratio-feature engineering stages below remain **Proposed** for Phase 2+ geolocated ISSDC datasets.
 
 ---
 

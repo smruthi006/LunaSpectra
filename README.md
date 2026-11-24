@@ -6,7 +6,7 @@
 
 **LunaSpectra: Intelligent Analysis and Interactive Mapping of Lunar Elemental Composition Using Chandrayaan-2 Data**
 
-![Status](https://img.shields.io/badge/Status-Planning-blue)
+![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
 ![License](https://img.shields.io/badge/Code%20License-MIT-green)
 ![Domain](https://img.shields.io/badge/Domain-Planetary%20Data%20Analytics-indigo)
 
@@ -28,7 +28,7 @@
 ---
 
 > [!NOTE]
-> **Project Phase Notice:** LunaSpectra is currently in the **Planning and Repository-Foundation Phase**. Architecture diagrams, API endpoints, database tables, and UI pages described in this repository are **Proposed / Planned** specifications. No production application code, trained models, or downloaded Chandrayaan-2 mission files are included yet.
+> **Project Phase Notice (Phase 1 Implemented):** LunaSpectra is in **Active Development**. The **Phase 1 backend vertical slice**—genuine Chandrayaan-2 CLASS data ingestion (`DOI: 10.17632/6mmd96j5bg.1`), normalized Parquet generation, SQLite database (`backend/lunaspectra.db`), FastAPI REST endpoints under `/api/v1`, and backend automated tests—is **Implemented**. Machine-learning pipelines, geolocated lunar mapping, and the React frontend remain **Planned**. Because the active Phase 1 dataset does not include latitude/longitude coordinates, `/api/v1/map/availability` truthfully reports `available: false`.
 
 ---
 
@@ -335,63 +335,71 @@ lunaspectra/
 
 ---
 
-## 16. Dataset Strategy
+## 16. Dataset Strategy & Phase 1 Real Dataset
 
 LunaSpectra separates dataset acquisition into two clearly bounded tiers:
 
-- **Approach A (Preferred MVP):** Use processed or derived geolocated elemental-abundance products (where available from official ISSDC archives or peer-reviewed CLASS-derived releases). This matches a 2-credit CSE scope and avoids claiming unverified spectral calibration expertise.
-- **Approach B (Advanced Optional Extension):** Jointly process raw CLASS spectra with XSM solar X-ray spectra, calibration files, response matrices, and orbital footprint metadata—requiring substantially deeper planetary spectroscopy validation.
+- **Phase 1 Active Dataset (`CLASS_CHANDRAYAAN2`, DOI: `10.17632/6mmd96j5bg.1`):** Genuine Chandrayaan-2 CLASS lunar X-ray data (Shyama Narendranath, ISRO, CC BY 4.0) covering **two observation dates** (`2019-11-18` and `2020-05-29`). It includes CLASS source and background spectra (`1024`-channel FITS & ASCII), onboard Fe-55 calibration spectra, **XSM solar X-ray data** (`CH2_XSM_20191118_90853504_90853624.pha` + Chianti solar model), XSPEC modelled line fluxes (`O, Na, Mg, Al, Si` for `2019-11-18`; `O, Mg, Al, Si, Ca-Ka, Ca-Kb, Fe` for `2020-05-29`), and X2ABUNDANCE weight-percent abundances (`Mg, Al, Si, Ca` with asymmetric upper/lower uncertainties for `2020-05-29`; `181120/R2_abundance.txt` element alignment is withheld due to a 5-label vs. 4-value mismatch). **Geospatial coordinates and footprints are absent**, so lunar mapping is marked unavailable (`available: false`) and complete lunar coverage is not claimed. The active backend serves **genuine mission data** (`data_origin = "mission"`), not synthetic data.
+- **Approach A (Phase 2+ Geolocated Expansion):** Ingest geolocated elemental-abundance products from ISSDC/PRADAN PDS4 archives once verified.
+- **Approach B (Optional Future Extension):** Full raw CLASS + XSM joint spectral fitting and physical abundance inversion.
 
-All conceptual schema fields in [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md) remain marked **To be verified** until inspected directly against downloaded PDS4/FITS product labels. See [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md).
+See [docs/REAL_DATA_INVENTORY.md](docs/REAL_DATA_INVENTORY.md), [docs/REAL_DATA_FIELD_MAPPING.md](docs/REAL_DATA_FIELD_MAPPING.md), and [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md).
 
 ---
 
-## 17. Proposed API Overview
+## 17. API Overview (`/api/v1`)
 
-All endpoints below are **Proposed** under base path `/api/v1` (see [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md)):
+Phase 1 real-data endpoints are **Implemented**; geospatial map, clustering, anomaly, comparison, and export endpoints remain **Proposed** (see [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md)):
 
 | Method | Route | Status | Purpose |
 | --- | --- | --- | --- |
-| `GET` | `/api/v1/health` | Proposed | Service & DB readiness check |
-| `GET` | `/api/v1/datasets` | Proposed | List registered datasets and provenance |
-| `GET` | `/api/v1/datasets/{dataset_id}` | Proposed | Retrieve single dataset metadata |
-| `GET` | `/api/v1/dataset/summary` | Proposed | Aggregate counts, coverage, quality summary |
-| `GET` | `/api/v1/elements` | Proposed | Supported elements, units, and availability |
-| `GET` | `/api/v1/observations` | Proposed | Paginated, filterable observations |
-| `GET` | `/api/v1/observations/{observation_id}` | Proposed | Full observation detail, uncertainties, ML scores |
-| `GET` | `/api/v1/map/observations` | Proposed | GeoJSON `FeatureCollection` for map rendering |
-| `GET` | `/api/v1/clusters` | Proposed | Cluster assignments & summary stats by `model_run_id` |
-| `GET` | `/api/v1/anomalies` | Proposed | Ranked/filtered anomalies by `model_run_id` |
-| `GET` | `/api/v1/model-runs` | Proposed | List recorded ML model runs & parameters |
-| `GET` | `/api/v1/model-runs/{model_run_id}` | Proposed | Inspect configuration and metrics of a run |
-| `POST` | `/api/v1/regions/compare` | Proposed | Compare two selected observations or bounding boxes |
-| `POST` | `/api/v1/exports` | Proposed | Request structured JSON/CSV/GeoJSON export metadata |
+| `GET` | `/api/v1/health` | **Implemented (Phase 1)** | Service, DB readiness, active dataset & counts |
+| `GET` | `/api/v1/datasets` | **Implemented (Phase 1)** | List registered real datasets and provenance |
+| `GET` | `/api/v1/datasets/{dataset_id}` | **Implemented (Phase 1)** | Retrieve dataset metadata & content types |
+| `GET` | `/api/v1/dataset/summary` | **Implemented (Phase 1)** | Measurable counts, elements, dates, missing-field summary |
+| `GET` | `/api/v1/elements` | **Implemented (Phase 1)** | Available elements, units, and uncertainty availability |
+| `GET` | `/api/v1/observations` | **Implemented (Phase 1)** | Paginated, filterable & sortable observations |
+| `GET` | `/api/v1/observations/{observation_id}` | **Implemented (Phase 1)** | Metadata, provenance, spectra, fluxes, abundances, missing fields |
+| `GET` | `/api/v1/observations/{observation_id}/spectra` | **Implemented (Phase 1)** | Source/background/XSM arrays with optional downsampling |
+| `GET` | `/api/v1/observations/{observation_id}/abundances` | **Implemented (Phase 1)** | Elemental abundances (`wt%`) and asymmetric uncertainties |
+| `GET` | `/api/v1/observations/{observation_id}/line-fluxes` | **Implemented (Phase 1)** | Modelled X-ray line fluxes (`photons/cm2/s`) |
+| `GET` | `/api/v1/map/availability` | **Implemented (Phase 1)** | Honest coordinate/footprint availability (`available: false` in Phase 1) |
+| `GET` | `/api/v1/map/observations` | Proposed (Phase 2+) | GeoJSON `FeatureCollection` once geolocated products exist |
+| `GET` | `/api/v1/clusters` | Proposed (Phase 4+) | Cluster assignments & summary stats by `model_run_id` |
+| `GET` | `/api/v1/anomalies` | Proposed (Phase 4+) | Ranked/filtered anomalies by `model_run_id` |
+| `GET` | `/api/v1/model-runs` | Proposed (Phase 4+) | List recorded ML model runs & parameters |
+| `GET` | `/api/v1/model-runs/{model_run_id}` | Proposed (Phase 4+) | Inspect configuration and metrics of a run |
+| `POST` | `/api/v1/regions/compare` | Proposed (Phase 3+) | Compare two selected observations or bounding boxes |
+| `POST` | `/api/v1/exports` | Proposed (Phase 3+) | Request structured JSON/CSV/GeoJSON export metadata |
 
 ---
 
-## 18. Preliminary Getting Started
+## 18. Getting Started (Backend Implemented; Frontend Planned)
 
-> [!WARNING]
-> **Preliminary Instructions:** Application dependencies (`frontend/`, `backend/`) have **not** been initialized yet in this documentation phase. The commands below outline the planned setup workflow once Phase 1–3 code scaffolding begins.
+The **Phase 1 backend and real-data pipeline** are runnable from the repository root in Windows PowerShell (see [backend/README.md](backend/README.md)). The React frontend under `frontend/` is **not** initialized yet.
 
 ```powershell
-# 1. Clone the repository
+# 1. Clone and enter the repository
 git clone https://github.com/smruthi006/LunaSpectra.git
 cd LunaSpectra
 
-# 2. Create a local environment file from the template
+# 2. Optional: create .env from .env.example
 Copy-Item .env.example .env
 
-# 3. Planned Backend Setup (Available after Phase 3)
-# python -m venv .venv
-# .\.venv\Scripts\Activate.ps1
-# pip install -r backend/requirements.txt
-# uvicorn backend.app.main:app --reload
+# 3. Backend Setup & Phase 1 Real-Data Pipeline
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r backend\requirements-dev.txt
 
-# 4. Planned Frontend Setup (Available after Phase 5)
-# cd frontend
-# npm install
-# npm run dev
+python backend\scripts\acquire_class_data.py
+python backend\scripts\inspect_class_data.py
+python backend\scripts\process_class_data.py
+python backend\scripts\seed_database.py
+uvicorn backend.app.main:app --reload
+
+# 4. Planned Frontend Setup (Not initialized yet)
+# cd frontend && npm install && npm run dev
 ```
 
 See [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) for environment details.
@@ -409,7 +417,7 @@ Safe defaults are templated in [.env.example](.env.example). Never commit `.env`
 | `API_VERSION` | `v1` | REST API version prefix |
 | `API_HOST` / `API_PORT` | `127.0.0.1` / `8000` | Planned FastAPI bind address |
 | `FRONTEND_URL` | `http://localhost:5173` | Allowed CORS origin for Vite dev server |
-| `DATABASE_URL` | `sqlite:///./lunaspectra.db` | SQLAlchemy connection string |
+| `DATABASE_URL` | `sqlite:///./backend/lunaspectra.db` | SQLAlchemy connection string |
 | `DATA_RAW_DIR` | `./data/raw` | Immutable raw mission archive directory |
 | `DATA_INTERIM_DIR` | `./data/interim` | Intermediate cleaned datasets |
 | `DATA_PROCESSED_DIR` | `./data/processed` | Processed Parquet feature tables |
@@ -471,10 +479,10 @@ See [docs/TESTING_STRATEGY.md](docs/TESTING_STRATEGY.md).
 
 ## 23. Roadmap
 
-- [x] **Phase 0 — Feasibility and documentation** *(In review)*
-- [ ] **Phase 1 — Repository and contract foundation**
-- [ ] **Phase 2 — Dataset proof of concept (ISSDC/PRADAN inspection)**
-- [ ] **Phase 3 — Backend and database foundation**
+- [x] **Phase 0 — Feasibility and documentation** *(Completed)*
+- [x] **Phase 1 — Real CLASS data ingestion, database foundation, and FastAPI backend** *(Implemented in `feature/real-data-backend`)*
+- [ ] **Phase 2 — Geolocated ISSDC/PRADAN dataset expansion**
+- [ ] **Phase 3 — Extended backend contracts (GeoJSON map & region comparison)**
 - [ ] **Phase 4 — ML baselines (clustering & quality-aware anomaly detection)**
 - [ ] **Phase 5 — Frontend and 2D lunar map**
 - [ ] **Phase 6 — Integration and end-to-end testing**
@@ -512,6 +520,9 @@ Rights across software, mission data, basemaps, and dependencies are strictly se
 
 > **Required Mission Data Acknowledgement:**
 > "We acknowledge the use of data from the Chandrayaan-II, second lunar mission of the Indian Space Research Organisation (ISRO), archived at the Indian Space Science Data Centre (ISSDC)."
+>
+> **Phase 1 Mendeley Dataset Attribution (CC BY 4.0):**
+> "Shyama Narendranath (Indian Space Research Organisation), *CLASS_CHANDRAYAAN2*, Version 1 (2020), Mendeley Data, DOI: `10.17632/6mmd96j5bg.1`, licensed under CC BY 4.0 (<http://creativecommons.org/licenses/by/4.0>). Source measurements and derived tables remain distinct from student-authored software."
 
 > [!IMPORTANT]
 > **TODO (Pre-Publication / Pre-Redistribution):** The team must re-check the latest official ISRO / ISSDC / PRADAN data-use, citation, and redistribution policies—as well as chosen lunar basemap WMTS/tile terms—before any public release, academic publication, or live deployment.

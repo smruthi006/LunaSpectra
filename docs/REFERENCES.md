@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/REFERENCES.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Primary Sources Only (Additional PDS4 Bundle Docs To Be Added in Phase 2)` |
+| **Status** | `Active — Updated for Phase 1 Real Dataset (DOI: 10.17632/6mmd96j5bg.1)` |
 | **Owner** | `[Member 1 & Member 2 Placeholders]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Faculty Guide Name Placeholder]` |
@@ -16,11 +16,12 @@
 
 ---
 
-## 1. Mission and Official Data Archive Portals
+## 1. Phase 1 Active Dataset & Mission Archive Portals
 
-1. **Indian Space Research Organisation (ISRO)** — Chandrayaan-2 Mission and Orbiter Payloads Overview (CLASS & XSM). Official Portal: <https://www.isro.gov.in>
-2. **Indian Space Science Data Centre (ISSDC)** — Official Planetary Science Data Archive for Chandrayaan-2. Official Portal: <https://www.issdc.gov.in>
-3. **PRADAN (Policy-based Data Retrieval, Analytics, Dissemination and Notification System)** — ISSDC Search and Retrieval Portal for Chandrayaan-2 Payload Products. Archive Portal: <https://pradan.issdc.gov.in/pradan>
+1. **Shyama Narendranath (Indian Space Research Organisation)** — *CLASS_CHANDRAYAAN2* (Version 1, published 30 October 2020), Mendeley Data, DOI: `10.17632/6mmd96j5bg.1`, License: CC BY 4.0. Source: <https://data.mendeley.com/datasets/6mmd96j5bg/1>
+2. **Indian Space Research Organisation (ISRO)** — Chandrayaan-2 Mission and Orbiter Payloads Overview (CLASS & XSM). Official Portal: <https://www.isro.gov.in>
+3. **Indian Space Science Data Centre (ISSDC)** — Official Planetary Science Data Archive for Chandrayaan-2. Official Portal: <https://www.issdc.gov.in>
+4. **PRADAN (Policy-based Data Retrieval, Analytics, Dissemination and Notification System)** — ISSDC Search and Retrieval Portal for Chandrayaan-2 Payload Products. Archive Portal: <https://pradan.issdc.gov.in/pradan>
 
 ---
 

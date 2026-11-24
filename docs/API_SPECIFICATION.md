@@ -4,25 +4,26 @@
 | --- | --- |
 | **Document** | `docs/API_SPECIFICATION.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Proposed — Planning Phase (No Live Endpoints Implemented)` |
+| **Status** | `Active — Phase 1 Real-Data Endpoints Implemented; Geospatial & ML Endpoints Proposed` |
 | **Owner** | `[Member 4 Name Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Member 3 Name Placeholder]`, `[Member 1 Name Placeholder]` |
 
 ---
 
-> [!IMPORTANT]
-> Every endpoint in this document is **Proposed**. No FastAPI server has been implemented yet. Any JSON examples below use **illustrative synthetic values** (`data_origin: "synthetic"`) solely to define the planned API contract between backend and frontend.
+> [!NOTE]
+> **Implementation Status:** Core Phase 1 endpoints (`/health`, `/datasets`, `/datasets/{dataset_id}`, `/dataset/summary`, `/elements`, `/observations`, `/observations/{observation_id}`, `/observations/{observation_id}/spectra`, `/observations/{observation_id}/abundances`, `/observations/{observation_id}/line-fluxes`, and `/map/availability`) are **Implemented** in `backend/app/api/routes/` serving genuine Chandrayaan-2 CLASS data (`DOI: 10.17632/6mmd96j5bg.1`, `data_origin: "mission"`). Because this dataset lacks verified coordinates, `/api/v1/map/availability` returns `available: false` and `/api/v1/map/observations` remains **Proposed**.
 
 ---
 
 ## 1. API Conventions
 
 - **Base Path:** `/api/v1`
-- **Content-Type:** `application/json` (`application/geo+json` or `application/json` for GeoJSON responses)
-- **Coordinates:** Canonical East-positive planetocentric longitude `[-180.0, 180.0]`, latitude `[-90.0, 90.0]`.
-- **Null Semantics:** Missing or unmeasured elemental values serialize as JSON `null`, never `0`.
-- **Pagination Defaults:** `limit` default `50` (min `1`, max `500`), `offset` default `0` (min `0`).
+- **Swagger UI:** `/docs`
+- **Content-Type:** `application/json` (`application/geo+json` or `application/json` for future GeoJSON responses)
+- **Coordinates:** Canonical East-positive planetocentric longitude `[-180.0, 180.0]`, latitude `[-90.0, 90.0]` (`null` in Phase 1 when absent from source).
+- **Null Semantics:** Missing or unmeasured values serialize as JSON `null`, never `0`.
+- **Pagination:** Phase 1 `GET /api/v1/observations` uses `page` (default `1`, `>= 1`) and `page_size` (default `20`, `1..200`), returning `pagination: { page, page_size, total_items, total_pages }`.
 - **Standard Error Envelope:**
   ```json
   {
@@ -40,20 +41,24 @@
 
 | Method | Route | Status |
 | --- | --- | --- |
-| `GET` | `/api/v1/health` | Proposed |
-| `GET` | `/api/v1/datasets` | Proposed |
-| `GET` | `/api/v1/datasets/{dataset_id}` | Proposed |
-| `GET` | `/api/v1/dataset/summary` | Proposed |
-| `GET` | `/api/v1/elements` | Proposed |
-| `GET` | `/api/v1/observations` | Proposed |
-| `GET` | `/api/v1/observations/{observation_id}` | Proposed |
-| `GET` | `/api/v1/map/observations` | Proposed |
-| `GET` | `/api/v1/clusters` | Proposed |
-| `GET` | `/api/v1/anomalies` | Proposed |
-| `GET` | `/api/v1/model-runs` | Proposed |
-| `GET` | `/api/v1/model-runs/{model_run_id}` | Proposed |
-| `POST` | `/api/v1/regions/compare` | Proposed |
-| `POST` | `/api/v1/exports` | Proposed |
+| `GET` | `/api/v1/health` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/datasets` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/datasets/{dataset_id}` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/dataset/summary` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/elements` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/observations` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/observations/{observation_id}` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/observations/{observation_id}/spectra` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/observations/{observation_id}/abundances` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/observations/{observation_id}/line-fluxes` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/map/availability` | **Implemented (Phase 1)** |
+| `GET` | `/api/v1/map/observations` | Proposed (Phase 2+) |
+| `GET` | `/api/v1/clusters` | Proposed (Phase 4+) |
+| `GET` | `/api/v1/anomalies` | Proposed (Phase 4+) |
+| `GET` | `/api/v1/model-runs` | Proposed (Phase 4+) |
+| `GET` | `/api/v1/model-runs/{model_run_id}` | Proposed (Phase 4+) |
+| `POST` | `/api/v1/regions/compare` | Proposed (Phase 3+) |
+| `POST` | `/api/v1/exports` | Proposed (Phase 3+) |
 
 ---
 

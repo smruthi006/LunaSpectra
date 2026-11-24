@@ -1,0 +1,24 @@
+"""Shared Pydantic v2 schemas for pagination and structured errors."""
+
+from __future__ import annotations
+
+from typing import Any
+
+from pydantic import BaseModel, Field
+
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    details: dict[str, Any] = Field(default_factory=dict)
+
+
+class ErrorResponse(BaseModel):
+    error: ErrorDetail
+
+
+class PaginationMeta(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int

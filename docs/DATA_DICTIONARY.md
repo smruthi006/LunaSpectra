@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/DATA_DICTIONARY.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Proposed — Conceptual Schema (To Be Verified Against PDS4 Products)` |
+| **Status** | `Active — Phase 1 Schema Implemented (DOI: 10.17632/6mmd96j5bg.1); Phase 2 Geospatial Fields Conceptual` |
 | **Owner** | `[Member 1 Name Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Member 2 Name Placeholder]`, `[Member 4 Name Placeholder]` |
@@ -13,12 +13,12 @@
 
 ## 1. Schema Conventions
 
-- **Verification Status:** Every conceptual field below is marked **To be verified** until confirmed against the actual downloaded Chandrayaan-2 PDS4/FITS product labels in Phase 2.
+- **Phase 1 Implemented vs. Phase 2 Conceptual:** For the Phase 1 Mendeley dataset (`DOI: 10.17632/6mmd96j5bg.1`), verified canonical mappings are documented in [REAL_DATA_FIELD_MAPPING.md](REAL_DATA_FIELD_MAPPING.md) and stored in `data/processed/class_mendeley_v1/*.parquet` and `backend/lunaspectra.db`. Conceptual geospatial/quality fields below remain marked **To be verified** until geolocated ISSDC/PRADAN PDS4 bundles are inspected in Phase 2.
 - **Null Semantics:** `NULL` (or `NaN` in Parquet) strictly means **unavailable, below detection threshold, or unmeasured** — **never `0`**. Replacing missing measurements with `0` is prohibited because it corrupts elemental averages, ratios, clustering, and anomaly scores.
 - **Coordinate Convention:**
-  - `center_latitude`: Planetocentric lunar latitude in decimal degrees, constrained to `[-90.0, 90.0]`.
-  - `center_longitude`: Canonical internal convention is **East-positive planetocentric longitude in `[-180.0, 180.0]`**. If source products use `[0.0, 360.0)`, ingestion will normalize values `> 180.0` via `lon - 360.0` while recording the transformation in pipeline logs.
-- **Data Origin Separation:** `data_origin` must explicitly record whether a record originates from `mission` data or `synthetic` test fixtures.
+  - `center_latitude`: Planetocentric lunar latitude in decimal degrees, constrained to `[-90.0, 90.0]` (stored as `NULL` in Phase 1 because coordinates are absent in `10.17632/6mmd96j5bg.1`).
+  - `center_longitude`: Canonical internal convention is **East-positive planetocentric longitude in `[-180.0, 180.0]`** (stored as `NULL` in Phase 1). If future source products use `[0.0, 360.0)`, ingestion will normalize values `> 180.0` via `lon - 360.0` while recording the transformation in pipeline logs.
+- **Data Origin Separation:** `data_origin` must explicitly record whether a record originates from `mission` data or `synthetic` test fixtures. Phase 1 backend data uses `data_origin = "mission"` exclusively.
 
 ---
 

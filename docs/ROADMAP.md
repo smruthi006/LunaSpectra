@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/ROADMAP.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Phase 0 In Review` |
+| **Status** | `Active — Phase 1 Backend Vertical Slice Implemented` |
 | **Owner** | `[All 4 Team Members Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Faculty Guide Name Placeholder]` |
@@ -17,45 +17,45 @@ LunaSpectra follows an incremental 8-phase roadmap scoped to a 2-credit, third-y
 
 ---
 
-## Phase 0 — Feasibility and Documentation *(Current Phase)*
+## Phase 0 — Feasibility and Documentation *(Completed)*
 
 - **Objectives:** Establish project scope, scientific boundaries, data strategy, database/API contracts, and repository governance before writing application code.
 - **Deliverables:** Root governance files, `README.md`, 19 technical & planning docs under `docs/`, `.env.example`, `.gitignore`, GitHub issue/PR templates.
 - **Dependencies:** Team alignment on 2-credit MVP boundaries and Chandrayaan-2 Approach A strategy.
-- **Acceptance Criteria:** All docs pass internal link, Mermaid syntax, and scientific-honesty checks; faculty guide and team review completed.
+- **Acceptance Criteria:** All docs pass internal link, Mermaid syntax, and scientific-honesty checks; foundation committed on `main` and `develop`.
 - **Assigned Role:** All 4 Members (coordinated by Member 4).
-- **Risks:** Scope expansion beyond 2 credits; unverified assumptions about archive schemas prior to Phase 2 download.
+- **Risks:** Scope expansion beyond 2 credits; unverified assumptions about archive schemas prior to dataset download.
 
 ---
 
-## Phase 1 — Repository and Contract Foundation
+## Phase 1 — Real CLASS Data Ingestion, Database & FastAPI Backend *(Current Phase — PR In Review)*
 
-- **Objectives:** Initialize `develop` branch, configure linters/formatters/pre-commit hooks, and lock shared Pydantic/Zod/Parquet data contracts using small synthetic fixtures.
-- **Deliverables:** `develop` branch, pre-commit config, `data/sample/` synthetic fixtures, agreed schema definitions.
-- **Dependencies:** Phase 0 review approval.
-- **Acceptance Criteria:** Team agrees on frozen v1 contracts for observations, units, `[-180, 180]` longitude convention, and `data_origin` tags.
-- **Assigned Role:** Member 4 (lead) with Members 1, 2, 3.
-- **Risks:** Frontend/backend schema drift; inconsistent coordinate conventions.
+- **Objectives:** Build an end-to-end backend vertical slice using genuine Chandrayaan-2 CLASS data (`DOI: 10.17632/6mmd96j5bg.1`), reproducible Parquet tables, SQLite storage, FastAPI endpoints, and automated tests.
+- **Deliverables:** `backend/app/` FastAPI service, `backend/scripts/` (`acquire_class_data.py`, `inspect_class_data.py`, `process_class_data.py`, `seed_database.py`), `backend/tests/`, `docs/REAL_DATA_INVENTORY.md`, `docs/REAL_DATA_FIELD_MAPPING.md`.
+- **Dependencies:** Phase 0 foundation; public access to Mendeley Data v1 (`10.17632/6mmd96j5bg.1`).
+- **Acceptance Criteria:** Reproducible acquisition, inventory, Parquet processing, idempotent SQLite seeding, passing Ruff/Mypy/Pytest gates, and live endpoint verification.
+- **Assigned Role:** Member 1 & Member 4 (with team review).
+- **Risks:** Absent geospatial coordinates in Mendeley v1 (mitigated via honest `/api/v1/map/availability` reporting `available: false`); ambiguous element header in `181120/R2_abundance.txt`.
 
 ---
 
-## Phase 2 — Dataset Proof of Concept
+## Phase 2 — Geolocated ISSDC/PRADAN Dataset Expansion
 
-- **Objectives:** Inspect real Chandrayaan-2 CLASS/XSM archive listings on ISSDC/PRADAN, download small sample bundles into ignored `data/raw/`, and verify fields, units, coverage, and uncertainties.
-- **Deliverables:** Verified product format notes in `docs/DATASET_GUIDE.md` & `docs/DATA_DICTIONARY.md`; prototype parser script in `scripts/`; updated `docs/DECISION_LOG.md`.
-- **Dependencies:** Phase 1 contracts; ISSDC/PRADAN archive access.
-- **Acceptance Criteria:** Confirm whether Approach A derived abundance products are directly usable; document exact elements, units, quality flags, and footprint structure.
+- **Objectives:** Inspect geolocated Chandrayaan-2 CLASS/XSM PDS4 bundles on ISSDC/PRADAN to acquire verified latitude, longitude, and footprint polygons for lunar mapping.
+- **Deliverables:** Verified PDS4 product format notes in `docs/DATASET_GUIDE.md` & `docs/DATA_DICTIONARY.md`; extended adapter if geolocated products are acquired.
+- **Dependencies:** Phase 1 backend foundation; ISSDC/PRADAN archive access.
+- **Acceptance Criteria:** Confirm geolocated elements, units, quality flags, and footprint coordinates before enabling `/api/v1/map/observations` GeoJSON endpoints.
 - **Assigned Role:** Member 1 (lead), Member 2 (scientific verification).
-- **Risks:** No directly usable abundance table; insufficient geolocation/uncertainty fields; large binary archive sizes.
+- **Risks:** No directly usable geolocated abundance table; large binary archive sizes.
 
 ---
 
-## Phase 3 — Backend and Database Foundation
+## Phase 3 — Extended Backend Contracts (Geospatial & Comparison)
 
-- **Objectives:** Implement SQLAlchemy models, Alembic migrations, SQLite loader, and FastAPI `/api/v1` endpoints with Pydantic validation and unit tests.
-- **Deliverables:** `backend/` FastAPI service, `lunaspectra.db` schema migrations, `/health`, `/datasets`, `/observations`, `/map/observations`, `/regions/compare` endpoints, `pytest` API tests.
-- **Dependencies:** Phase 1 contracts; Phase 2 verified schema fields.
-- **Acceptance Criteria:** Endpoints pass schema, pagination, GeoJSON validity, and `404`/`422` error tests against synthetic and verified sample data.
+- **Objectives:** Extend the Phase 1 SQLAlchemy/FastAPI backend with geolocated observation endpoints (`/api/v1/map/observations`, `/api/v1/regions/compare`, `/api/v1/clusters`, `/api/v1/anomalies`) once verified geolocated data and ML runs exist.
+- **Deliverables:** Extended database tables/migrations and REST endpoints built atop the Phase 1 SQLite core.
+- **Dependencies:** Phase 1 backend; Phase 2 geolocated product verification.
+- **Acceptance Criteria:** Endpoints pass schema, pagination, GeoJSON validity, and `404`/`422` error tests.
 - **Assigned Role:** Member 4 (lead), Member 1 (DB loader integration).
 - **Risks:** Performance bottlenecks on large GeoJSON responses; SQLite query tuning.
 

@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/DATABASE_DESIGN.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Proposed — Planning Phase` |
+| **Status** | `Active — Phase 1 SQLite Schema Implemented (backend/lunaspectra.db); ML & Geospatial Tables Proposed` |
 | **Owner** | `[Member 4 Name Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Member 1 Name Placeholder]`, `[Member 2 Name Placeholder]` |
@@ -12,7 +12,7 @@
 ---
 
 > [!NOTE]
-> This schema is **Proposed** for SQLite (`lunaspectra.db`) managed via SQLAlchemy and Alembic migrations. Final column types will be confirmed once Chandrayaan-2 PDS4 product schemas are verified in Phase 2.
+> **Phase 1 Implemented Core:** Six normalized SQLAlchemy 2 tables (`datasets`, `source_products`, `observations`, `spectra`, `elemental_line_fluxes`, `elemental_abundances`) are **Implemented** in `backend/app/db/models.py` and seeded idempotently into `backend/lunaspectra.db` (SQLite with `PRAGMA foreign_keys=ON`). Spatial `footprints`, `quality_metrics`, `model_runs`, `feature_vectors`, `cluster_results`, `anomaly_results`, and `exports` tables remain **Proposed** for Phases 2–4.
 
 ---
 
