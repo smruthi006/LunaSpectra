@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/TESTING_STRATEGY.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Planned — Planning Phase (No Test Suite Executed Yet)` |
+| **Status** | `Active — Phase 1 Backend Tests Implemented (ML & Frontend Tests Planned)` |
 | **Owner** | `[Member 4 & All Owners Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[All Team Members Placeholder]` |
@@ -12,7 +12,7 @@
 ---
 
 > [!NOTE]
-> No automated test files or frameworks are installed in this documentation phase. This document defines the **planned** verification matrix for `tests/` (Pytest) and `frontend/` (Vitest + React Testing Library).
+> **Phase 1 Implementation Status:** Backend unit and API tests are **implemented** under `backend/tests/` (`test_health.py`, `test_adapter.py`, `test_processing.py`, `test_database.py`, `test_datasets_api.py`, `test_observations_api.py`) using small schema-faithful FITS/ASCII test fixtures (`backend/tests/conftest.py`). ML and React frontend tests remain **Planned** for future phases.
 
 ---
 

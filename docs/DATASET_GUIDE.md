@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/DATASET_GUIDE.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Draft — Pending PDS4 Product Verification (Phase 2)` |
+| **Status** | `Active — Phase 1 Mendeley Dataset Verified (DOI: 10.17632/6mmd96j5bg.1); ISSDC PDS4 Expansion Pending` |
 | **Owner** | `[Member 1 Name Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Member 2 Name Placeholder]`, `[Faculty Guide Name Placeholder]` |
@@ -53,10 +53,32 @@ In **Approach B**, raw or low-level **CLASS** spectral products would be paired 
 
 ---
 
-## 3. Verification Mandate (Phase 2 Prerequisite)
+## 3. Phase 1 Active Real Dataset (`CLASS_CHANDRAYAAN2`)
+
+In Phase 1, LunaSpectra ingests genuine public Chandrayaan-2 CLASS data from Mendeley Data:
+
+- **Name:** `CLASS_CHANDRAYAAN2` (Version 1, published 30 October 2020)
+- **DOI:** `10.17632/6mmd96j5bg.1` (<https://data.mendeley.com/datasets/6mmd96j5bg/1>)
+- **Contributor / Institution:** Shyama Narendranath, Indian Space Research Organisation (ISRO)
+- **License:** CC BY 4.0
+- **Local Raw Staging (Git-Ignored):** `data/raw/class_mendeley_v1/`
+- **Observed Scope:**
+  - Two lunar observation dates: `2019-11-18` (`181120`) and `2020-05-29` (`290520`)
+  - CLASS FITS + ASCII source spectra (`1024` channels) and background spectra
+  - Onboard Fe-55 calibration spectra (pre-flight and post-flight)
+  - Solar X-ray data (`SOLAR_DATA`): XSM spectrum `CH2_XSM_20191118_90853504_90853624.pha` (`512` channels with `STAT_ERR`) and Chianti isothermal solar model spectrum (`2019-11-18`)
+  - XSPEC modelled line fluxes (`photons/cm2/s`) and X2ABUNDANCE weight-percent abundances (`wt%`)
+- **Verified Limitations:**
+  - **No geospatial coordinates or footprint polygons** exist in this dataset (`latitude = null`, `longitude = null`, `footprint_geometry = null`).
+  - `181120/R2_abundance.txt` lists 5 header element names (`Na, Mg, Al, Si, Ca`) against 4 array entries (`[2.0, 5.0, 8.0, 18.0]`); element alignment is withheld rather than guessed.
+  - Complete lunar coverage is **not** claimed.
+
+See [REAL_DATA_INVENTORY.md](REAL_DATA_INVENTORY.md) and [REAL_DATA_FIELD_MAPPING.md](REAL_DATA_FIELD_MAPPING.md) for file-by-file verification.
+
+### Phase 2 Verification Mandate (ISSDC / PRADAN PDS4 Expansion)
 
 > [!IMPORTANT]
-> No Chandrayaan-2 data files have been downloaded or inspected yet. Before writing production parsers or final SQL schemas, the team **must** inspect downloaded PDS4 products and their official bundle documentation in Phase 2 to verify:
+> To enable lunar mapping in Phase 2+, the team must inspect geolocated PDS4 bundles from ISSDC / PRADAN in `data/raw/` to verify:
 
 - Exact file formats (e.g., PDS4 XML labels `.xml`, FITS tables `.fits`, CSV/ASCII tables)
 - Exact column/field names, data types, and units (e.g., wt%, atom%, ratio, or count rate)
@@ -83,6 +105,9 @@ Source code in this repository is licensed under the MIT License ([LICENSE](../L
 
 > **Required Mission Data Acknowledgement:**
 > "We acknowledge the use of data from the Chandrayaan-II, second lunar mission of the Indian Space Research Organisation (ISRO), archived at the Indian Space Science Data Centre (ISSDC)."
+>
+> **Phase 1 Dataset Attribution (CC BY 4.0):**
+> "Shyama Narendranath (Indian Space Research Organisation), *CLASS_CHANDRAYAAN2*, Version 1 (2020), Mendeley Data, DOI: `10.17632/6mmd96j5bg.1`, CC BY 4.0 (<http://creativecommons.org/licenses/by/4.0>)."
 
 > [!WARNING]
 > **TODO (Pre-Publication / Redistribution Check):** Before publishing results, hosting a public web demo, or redistributing any derived data tables, the team must re-check the latest official ISRO / ISSDC / PRADAN data-use policies and lunar basemap (USGS/NASA/LROC) attribution requirements.

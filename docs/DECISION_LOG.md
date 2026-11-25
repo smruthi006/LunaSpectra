@@ -21,6 +21,10 @@
 | **DEC-04** | `2026-11-24` | Use **SQLite + Apache Parquet** for local MVP storage instead of PostgreSQL/PostGIS | Zero-ops local workflow for 4-student academic development; PostGIS remains a Phase 8 scaling path. | Proposed |
 | **DEC-05** | `2026-11-24` | Enforce mandatory `data_origin` (`mission` \| `synthetic`) across pipeline, DB, API, and UI | Prevents accidental mixing of synthetic development fixtures with Chandrayaan-2 mission observations. | Enforced Policy |
 | **DEC-06** | `2026-11-24` | License student-authored code under **MIT**, keeping ISRO data and basemaps separate | Complies with open-source academic practice without relicensing third-party space-agency assets. | Active |
+| **DEC-07** | `2026-11-24` | Adopt genuine Mendeley Data `CLASS_CHANDRAYAAN2` (`DOI: 10.17632/6mmd96j5bg.1`, CC BY 4.0) for Phase 1 backend vertical slice | Provides real CLASS FITS/ASCII spectra, XSM solar data, modelled line fluxes, and derived abundances without synthetic placeholders. | Implemented (Phase 1) |
+| **DEC-08** | `2026-11-24` | Withhold element mapping for `181120/R2_abundance.txt` (`warning` status) rather than guessing | Header lists 5 elements (`Na, Mg, Al, Si, Ca`) while arrays contain 4 values `[2.0, 5.0, 8.0, 18.0]`; guessing would risk misattributing abundances. | Implemented (Phase 1) |
+| **DEC-09** | `2026-11-24` | Return `available: false` on `/api/v1/map/availability` instead of fake GeoJSON | Mendeley v1 files lack verified latitude, longitude, and footprint corner fields; geospatial mapping awaits geolocated ISSDC/PRADAN products. | Implemented (Phase 1) |
+| **DEC-10** | `2026-11-24` | Update `LICENSE` copyright holder to `Smruthi and LunaSpectra Contributors` | Resolved before initial foundation commit on `main`. | Resolved |
 
 ---
 
@@ -40,7 +44,7 @@ All placeholders below appear across repository files and **must be replaced by 
 | `[Academic Year Placeholder]` | `README.md`, `docs/PROJECT_PROPOSAL.md` | All Members | Pending team input |
 | `[Contact Email Placeholder]` / `[Security Contact Email Placeholder]` | `README.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | Member 4 | Pending team input |
 | `[GitHub Organization / User Placeholder]` | `README.md`, `CODE_OF_CONDUCT.md` | Member 4 | Pending confirmation (`smruthi006` currently in remote) |
-| `[LunaSpectra Project Team — Student Contributors Placeholder]` | `LICENSE` | All Members | Pending team names |
+| `[LunaSpectra Project Team — Student Contributors Placeholder]` | `LICENSE` | All Members | Resolved (`Smruthi and LunaSpectra Contributors`) |
 | UI Mockup / Screenshot Placeholders (`assets/images/mockup_*.png`) | `README.md`, `docs/FRONTEND_SPECIFICATION.md` | Member 3 | Reserved for Phase 5 |
 | Deployment URL (if hosted later) | `README.md`, `docs/DEPLOYMENT_GUIDE.md` | Member 4 | Not applicable in Phase 0 |
 

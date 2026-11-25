@@ -4,7 +4,7 @@
 | --- | --- |
 | **Document** | `docs/ETHICS_AND_LIMITATIONS.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Mandatory Project Policy` |
+| **Status** | `Active — Updated for Phase 1 Real Dataset` |
 | **Owner** | `[All 4 Team Members Placeholder]` |
 | **Last updated** | `2026-11-24` |
 | **Reviewers** | `[Faculty Guide Name Placeholder]` |
@@ -39,15 +39,19 @@ LunaSpectra enforces a four-way separation of intellectual property and data rig
 | Asset Category | Governing Terms | Repository Policy |
 | --- | --- | --- |
 | **1. Student-Authored Source Code & Docs** | [MIT License](../LICENSE) | Openly hosted in this Git repository. |
-| **2. Chandrayaan-2 / ISRO Mission Data** | ISRO / ISSDC archival policy | **Not** relicensed by MIT. Never committed to Git (`data/raw/` is ignored). |
-| **3. Lunar Basemap Imagery** | Provider terms (e.g., USGS Astrogeology / NASA / LROC public domain & citation guidelines) | Consumed via documented tile/WMTS URLs with proper attribution. |
-| **4. Third-Party Libraries** | Individual open-source licenses (React, FastAPI, Scikit-learn, Leaflet, etc.) | Tracked via dependency manifests once initialized. |
+| **2. Chandrayaan-2 / ISRO Mission Data & Mendeley Dataset (`10.17632/6mmd96j5bg.1`)** | ISRO / ISSDC archival policy; Mendeley Data `CLASS_CHANDRAYAAN2` v1 under **CC BY 4.0** (Shyama Narendranath, ISRO) | **Not** relicensed by MIT. Never committed to Git (`data/raw/` is ignored). |
+| **3. Lunar Basemap Imagery** | Provider terms (e.g., USGS Astrogeology / NASA / LROC public domain & citation guidelines) | Deferred until verified geolocated coordinates are available (currently `map/availability` returns `available: false`). |
+| **4. Third-Party Libraries** | Individual open-source licenses (FastAPI, SQLAlchemy, Astropy, PyArrow, Pandas, etc.) | Tracked via [backend/requirements.txt](../backend/requirements.txt). |
 
-### Required ISRO / ISSDC Acknowledgement
+### Required ISRO / ISSDC and CC BY 4.0 Attribution
 
-All documentation, reports, and UI `Data & Sources` views using Chandrayaan-2 data must include:
+All documentation, reports, and API provenance responses using Chandrayaan-2 data must include:
 
 > "We acknowledge the use of data from the Chandrayaan-II, second lunar mission of the Indian Space Research Organisation (ISRO), archived at the Indian Space Science Data Centre (ISSDC)."
+
+For the Phase 1 Mendeley dataset (`DOI: 10.17632/6mmd96j5bg.1`, CC BY 4.0):
+
+> "Dataset: Shyama Narendranath (Indian Space Research Organisation), *CLASS_CHANDRAYAAN2*, Version 1 (2020), Mendeley Data, DOI: `10.17632/6mmd96j5bg.1`, licensed under CC BY 4.0 (<http://creativecommons.org/licenses/by/4.0>). Source measurements remain distinct from student-authored software."
 
 > [!IMPORTANT]
 > **TODO (Mandatory Before Publication or Redistribution):** The team must re-check the latest official ISRO / ISSDC / PRADAN data-use, citation, and redistribution policies—as well as the selected lunar basemap provider's terms—before any public deployment, journal/conference submission, or redistribution of derived outputs.
