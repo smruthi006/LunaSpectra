@@ -6,7 +6,7 @@
 | **Version** | `0.1.0` |
 | **Status** | `Active — Living Governance Log` |
 | **Owner** | `[Member 4 & All Team Members Placeholder]` |
-| **Last updated** | `2026-11-24` |
+| **Last updated** | `2026-11-26` |
 | **Reviewers** | `[Faculty Guide Name Placeholder]` |
 
 ---
@@ -25,6 +25,9 @@
 | **DEC-08** | `2026-11-24` | Withhold element mapping for `181120/R2_abundance.txt` (`warning` status) rather than guessing | Header lists 5 elements (`Na, Mg, Al, Si, Ca`) while arrays contain 4 values `[2.0, 5.0, 8.0, 18.0]`; guessing would risk misattributing abundances. | Implemented (Phase 1) |
 | **DEC-09** | `2026-11-24` | Return `available: false` on `/api/v1/map/availability` instead of fake GeoJSON | Mendeley v1 files lack verified latitude, longitude, and footprint corner fields; geospatial mapping awaits geolocated ISSDC/PRADAN products. | Implemented (Phase 1) |
 | **DEC-10** | `2026-11-24` | Update `LICENSE` copyright holder to `Smruthi and LunaSpectra Contributors` | Resolved before initial foundation commit on `main`. | Resolved |
+| **DEC-11** | `2026-11-26` | Build Phase 2 React + TypeScript real-data UI strictly against Phase 1 FastAPI contracts with Zod runtime validation | Surfacing live spectra, asymmetric uncertainties, and multi-row line fluxes transparently without altering backend contracts or falling back to mock data. | Implemented (Phase 2) |
+| **DEC-12** | `2026-11-26` | Gate Lunar Explorer behind `/api/v1/map/availability` and refuse synthetic abundance deltas or multi-row flux averaging on Compare | Prevents misleading spatial markers or fabricated differences across incompatible observation products. | Implemented (Phase 2) |
+| **DEC-13** | `2026-11-26` | Configure Vite dev server default `host: 'localhost'` in `frontend/vite.config.ts` | Aligns frontend dev origin `http://localhost:5173` cleanly with backend default CORS `FRONTEND_URL=http://localhost:5173` verified during live browser integration testing. | Implemented (Phase 2) |
 
 ---
 
@@ -45,7 +48,7 @@ All placeholders below appear across repository files and **must be replaced by 
 | `[Contact Email Placeholder]` / `[Security Contact Email Placeholder]` | `README.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | Member 4 | Pending team input |
 | `[GitHub Organization / User Placeholder]` | `README.md`, `CODE_OF_CONDUCT.md` | Member 4 | Pending confirmation (`smruthi006` currently in remote) |
 | `[LunaSpectra Project Team — Student Contributors Placeholder]` | `LICENSE` | All Members | Resolved (`Smruthi and LunaSpectra Contributors`) |
-| UI Mockup / Screenshot Placeholders (`assets/images/mockup_*.png`) | `README.md`, `docs/FRONTEND_SPECIFICATION.md` | Member 3 | Reserved for Phase 5 |
+| Live Phase 2 Screenshots (`assets/images/*.png`) | `README.md`, `docs/FRONTEND_SPECIFICATION.md` | Member 3 | Captured from running Phase 2 app (`dashboard`, `observation_detail_20191118`, `observation_detail_20200529`, `comparison`, `lunar_explorer_unavailable`) |
 | Deployment URL (if hosted later) | `README.md`, `docs/DEPLOYMENT_GUIDE.md` | Member 4 | Not applicable in Phase 0 |
 
 ---

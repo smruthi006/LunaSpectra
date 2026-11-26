@@ -4,15 +4,18 @@
 | --- | --- |
 | **Document** | `docs/TESTING_STRATEGY.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Phase 1 Backend Tests Implemented (ML & Frontend Tests Planned)` |
+| **Status** | `Active — Phase 1 Backend Tests & Phase 2 Frontend Tests Implemented (ML & Geo Map Tests Planned)` |
 | **Owner** | `[Member 4 & All Owners Placeholder]` |
-| **Last updated** | `2026-11-24` |
+| **Last updated** | `2026-11-26` |
 | **Reviewers** | `[All Team Members Placeholder]` |
 
 ---
 
 > [!NOTE]
-> **Phase 1 Implementation Status:** Backend unit and API tests are **implemented** under `backend/tests/` (`test_health.py`, `test_adapter.py`, `test_processing.py`, `test_database.py`, `test_datasets_api.py`, `test_observations_api.py`) using small schema-faithful FITS/ASCII test fixtures (`backend/tests/conftest.py`). ML and React frontend tests remain **Planned** for future phases.
+> **Implementation Status:**
+> - **Backend (`backend/tests/`):** Unit and API tests are **implemented** (`test_health.py`, `test_adapter.py`, `test_processing.py`, `test_database.py`, `test_datasets_api.py`, `test_observations_api.py`) using small schema-faithful FITS/ASCII test fixtures (`backend/tests/conftest.py`).
+> - **Frontend (`frontend/src/test/`):** 4 Vitest + React Testing Library test files (`appAndRouting.test.tsx`, `dashboardAndValidation.test.tsx`, `observationsAndDetail.test.tsx`, `comparisonMapSources.test.tsx` — 13 tests) are **implemented**, covering routing, accessibility, Zod contract validation failure handling, live offline error alerts, `CLASS_20191118` / `CLASS_20200529` spectral/abundance rendering, comparison guards, unavailable `LunarExplorer` state, and ISRO / CC BY 4.0 attribution. Live UI routes and screenshots were additionally verified end-to-end against Uvicorn (`127.0.0.1:8000`) and Vite (`localhost:5173`) in headless Chrome with zero console or HTTP failures.
+> - **Remaining Planned:** Unsupervised ML tests and geolocated Leaflet/GeoJSON overlay tests.
 
 ---
 
