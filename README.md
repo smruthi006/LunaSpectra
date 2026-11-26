@@ -28,7 +28,7 @@
 ---
 
 > [!NOTE]
-> **Project Phase Notice (Phase 1 Implemented):** LunaSpectra is in **Active Development**. The **Phase 1 backend vertical slice**—genuine Chandrayaan-2 CLASS data ingestion (`DOI: 10.17632/6mmd96j5bg.1`), normalized Parquet generation, SQLite database (`backend/lunaspectra.db`), FastAPI REST endpoints under `/api/v1`, and backend automated tests—is **Implemented**. Machine-learning pipelines, geolocated lunar mapping, and the React frontend remain **Planned**. Because the active Phase 1 dataset does not include latitude/longitude coordinates, `/api/v1/map/availability` truthfully reports `available: false`.
+> **Project Phase Notice (Phase 1 Backend & Phase 2 Real-Data Frontend Implemented):** LunaSpectra is in **Active Development**. The **Phase 1 backend** (genuine Chandrayaan-2 CLASS ingestion for `DOI: 10.17632/6mmd96j5bg.1`, Parquet processing, SQLite storage, and FastAPI `/api/v1` endpoints) and the **Phase 2 React + TypeScript real-data explorer** (`frontend/`) are **Implemented** and verified end-to-end against live mission data (`2` observations, `8` spectra, `26` line fluxes, `4` verified abundances). **Unsupervised ML pipelines** and the **Leaflet 2D lunar map** remain **Deferred/Planned** pending geolocated ISSDC/PRADAN products (`/api/v1/map/availability` truthfully returns `available: false`).
 
 ---
 
@@ -46,16 +46,16 @@
 10. [Proposed System Architecture](#10-proposed-system-architecture)
 11. [Proposed Data Pipeline](#11-proposed-data-pipeline)
 12. [Proposed Machine-Learning Methodology](#12-proposed-machine-learning-methodology)
-13. [Planned Application Pages & Mockup Placeholders](#13-planned-application-pages--mockup-placeholders)
+13. [Application Pages & Live Screenshots](#13-application-pages--live-screenshots)
 14. [Proposed Technology Stack](#14-proposed-technology-stack)
 15. [Repository Structure](#15-repository-structure)
-16. [Dataset Strategy](#16-dataset-strategy)
-17. [Proposed API Overview](#17-proposed-api-overview)
-18. [Preliminary Getting Started](#18-preliminary-getting-started)
+16. [Dataset Strategy & Phase 1 Real Dataset](#16-dataset-strategy--phase-1-real-dataset)
+17. [API Overview (`/api/v1`)](#17-api-overview-apiv1)
+18. [Getting Started (Backend & Frontend Implemented)](#18-getting-started-backend--frontend-implemented)
 19. [Environment Variables Overview](#19-environment-variables-overview)
 20. [Team Structure](#20-team-structure)
 21. [Branching Workflow](#21-branching-workflow)
-22. [Planned Testing Strategy](#22-planned-testing-strategy)
+22. [Testing Strategy](#22-testing-strategy)
 23. [Roadmap](#23-roadmap)
 24. [Risks and Limitations](#24-risks-and-limitations)
 25. [Sustainable Development Goals (SDG) Alignment](#25-sustainable-development-goals-sdg-alignment)
@@ -260,28 +260,33 @@ See [docs/ML_METHODOLOGY.md](docs/ML_METHODOLOGY.md).
 
 ---
 
-## 13. Planned Application Pages & Mockup Placeholders
+## 13. Application Pages & Live Screenshots
 
-| Page (Planned) | Primary Purpose |
+| Page | Status | Primary Purpose |
+| --- | --- | --- |
+| **Home / Landing (`/`)** | **Implemented (Phase 2)** | Project introduction, real dataset scope summary, XRF workflow overview, and navigation into the explorer |
+| **Dashboard (`/dashboard`)** | **Implemented (Phase 2)** | Live summary counts (`2` observations, `8` spectra, `26` line fluxes, `4` abundances), element coverage charts, coordinate status, and missing-field disclosure |
+| **Observations (`/observations`)** | **Implemented (Phase 2)** | Filterable/sortable observation registry linked directly to `/api/v1/observations` |
+| **Observation Detail (`/observations/:id`)** | **Implemented (Phase 2)** | Acquisition metadata, XSM solar context, native-axis spectrum explorer, asymmetric abundance uncertainty chart, line-flux table, and SHA-256 provenance |
+| **Compare (`/compare`)** | **Implemented (Phase 2)** | Side-by-side comparison with strict missing-abundance, multi-row source, and incompatible-unit guards |
+| **Lunar Explorer (`/explorer`)** | **Boundary Ready (`available: false`)** | Checks `/api/v1/map/availability`; renders explicit unavailable disclosure pending geolocated PRADAN products (Leaflet activation Planned) |
+| **Methodology (`/methodology`)** | **Implemented (Phase 2)** | Acquisition, parsing, database persistence, and deferred ML/PRADAN disclosures |
+| **Data Sources (`/sources`)** | **Implemented (Phase 2)** | Required ISRO/ISSDC attribution, CC BY 4.0 vs. MIT license separation, and Mendeley vs. ISSDC/PRADAN distinction |
+
+### Real Application Screenshots
+
+> [!NOTE]
+> These screenshots were captured directly from the live running Phase 2 React application (`http://localhost:5173`) connected to the live FastAPI backend (`http://127.0.0.1:8000`) serving genuine `CLASS_CHANDRAYAAN2` mission data. They are real application captures, not mockups.
+
+| View | Live Screenshot |
 | --- | --- |
-| **Landing Page** | Project introduction, dataset overview, XRF scientific explanation, and link to Explorer |
-| **Dashboard** | Dataset summary, observation count, spatial coverage summary, available elements, quality stats, model-run metadata |
-| **Lunar Explorer** | Interactive 2D lunar basemap, element selector, cluster & anomaly overlays, quality filter, legend, coordinate readout |
-| **Observation Details** | Source product ID, acquisition time, coordinates, footprint geometry, element values, uncertainties, quality status, provenance |
-| **Region Comparison** | Two-observation or two-region selector, side-by-side composition charts, ratio differences, quality/uncertainty warnings |
-| **Analysis & Methodology** | Preprocessing, features, clustering, anomaly detection, evaluation metrics, scientific limitations |
-| **Data & Sources** | Dataset origin, product version, ISRO/ISSDC attribution, usage conditions, data dictionary |
+| **Dataset Dashboard** | ![LunaSpectra Dataset Dashboard](assets/images/dashboard.png) |
+| **Observation Detail (`CLASS_20191118` — XSM & withheld abundance notice)** | ![Observation Detail 2019-11-18](assets/images/observation_detail_20191118.png) |
+| **Observation Detail (`CLASS_20200529` — Verified abundances & 21 line fluxes)** | ![Observation Detail 2020-05-29](assets/images/observation_detail_20200529.png) |
+| **Side-by-Side Comparison (`CLASS_20191118` vs. `CLASS_20200529`)** | ![Side-by-Side Observation Comparison](assets/images/comparison.png) |
+| **Lunar Explorer (`/explorer` honest unavailable state)** | ![Lunar Explorer Unavailable State](assets/images/lunar_explorer_unavailable.png) |
 
-### UI Mockup Placeholders
-
-> [!IMPORTANT]
-> No frontend UI exists yet. The slots below are reserved for future wireframe mockups (and must remain explicitly labelled **Mockup** until real application screenshots are produced).
-
-- **Mockup Placeholder 1 — Lunar Explorer Map View:** `[Reserved: assets/images/mockup_lunar_explorer.png — Not yet created]`
-- **Mockup Placeholder 2 — Observation Detail & Composition Panel:** `[Reserved: assets/images/mockup_observation_detail.png — Not yet created]`
-- **Mockup Placeholder 3 — Region Comparison View:** `[Reserved: assets/images/mockup_region_comparison.png — Not yet created]`
-
-See [docs/FRONTEND_SPECIFICATION.md](docs/FRONTEND_SPECIFICATION.md) for component design and state handling.
+See [docs/FRONTEND_SPECIFICATION.md](docs/FRONTEND_SPECIFICATION.md) for component design, Zod runtime schemas, and state handling.
 
 ---
 
@@ -303,22 +308,22 @@ See [docs/FRONTEND_SPECIFICATION.md](docs/FRONTEND_SPECIFICATION.md) for compone
 
 ```text
 lunaspectra/
-├── frontend/                   # Planned React + TypeScript application
-│   └── .gitkeep
-├── backend/                    # Planned FastAPI service & database models
-│   └── .gitkeep
+├── frontend/                   # Implemented React + TypeScript + Vite real-data explorer
+│   ├── src/                    # API Zod schemas, TanStack Query hooks, pages, UI & charts
+│   └── package.json
+├── backend/                    # Implemented FastAPI service, SQLite DB loader, pipeline scripts & pytest suite
 ├── data/
 │   ├── raw/                    # Ignored: immutable downloaded Chandrayaan-2 products
-│   ├── interim/                # Ignored: intermediate cleaned artifacts
-│   ├── processed/              # Ignored: large Parquet analytical tables
+│   ├── interim/                # Ignored: intermediate cleaned artifacts & API samples
+│   ├── processed/              # Ignored: Parquet analytical tables
 │   └── sample/                 # Committed small synthetic/schema sample fixtures
 ├── notebooks/                  # Exploratory analysis notebooks (planned)
 ├── models/                     # Ignored: serialized model binaries
-├── scripts/                    # Planned CLI ingestion/ML runner scripts
-├── tests/                      # Planned automated test suites
+├── scripts/                    # Placeholder for cross-repo orchestration scripts
+├── tests/                      # Phase 1 backend & Phase 2 frontend suites live under backend/tests & frontend/src/test
 ├── docs/                       # Architecture, dataset, ML, API, and governance docs
 ├── assets/
-│   ├── images/                 # Mockups and visual assets
+│   ├── images/                 # Live Phase 2 application screenshots
 │   └── diagrams/               # Exported diagrams if needed
 ├── .github/
 │   ├── ISSUE_TEMPLATE/         # Structured issue forms
@@ -374,19 +379,20 @@ Phase 1 real-data endpoints are **Implemented**; geospatial map, clustering, ano
 
 ---
 
-## 18. Getting Started (Backend Implemented; Frontend Planned)
+## 18. Getting Started (Backend & Frontend Implemented)
 
-The **Phase 1 backend and real-data pipeline** are runnable from the repository root in Windows PowerShell (see [backend/README.md](backend/README.md)). The React frontend under `frontend/` is **not** initialized yet.
+Both the **Phase 1 real-data backend** ([backend/README.md](backend/README.md)) and the **Phase 2 React frontend** ([frontend/README.md](frontend/README.md)) are runnable locally in Windows PowerShell:
 
 ```powershell
 # 1. Clone and enter the repository
 git clone https://github.com/smruthi006/LunaSpectra.git
 cd LunaSpectra
 
-# 2. Optional: create .env from .env.example
+# 2. Optional: create .env from .env.example (or frontend\.env from frontend\.env.example)
 Copy-Item .env.example .env
+Copy-Item frontend\.env.example frontend\.env
 
-# 3. Backend Setup & Phase 1 Real-Data Pipeline
+# 3. Backend Setup & Phase 1 Real-Data Pipeline (Terminal 1)
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
@@ -396,13 +402,22 @@ python backend\scripts\acquire_class_data.py
 python backend\scripts\inspect_class_data.py
 python backend\scripts\process_class_data.py
 python backend\scripts\seed_database.py
-uvicorn backend.app.main:app --reload
+uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
 
-# 4. Planned Frontend Setup (Not initialized yet)
-# cd frontend && npm install && npm run dev
+# 4. Frontend Setup & Live Dev Server (Terminal 2)
+cd frontend
+npm install
+npm run dev
+# Opens on http://localhost:5173 (matches backend default FRONTEND_URL CORS origin)
+
+# 5. Frontend Quality Checks
+npm run lint
+npm run typecheck
+npm run test -- --run
+npm run build
 ```
 
-See [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) for environment details.
+See [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) and [frontend/README.md](frontend/README.md) for full details.
 
 ---
 
@@ -464,14 +479,13 @@ gitGraph
 
 ---
 
-## 22. Planned Testing Strategy
+## 22. Testing Strategy
 
-Automated testing will cover data integrity, ML determinism, API contracts, and UI states once implementation begins:
+Automated test suites verify backend Phase 1 pipelines/contracts and Phase 2 frontend behavior, while ML and geospatial map suites remain planned:
 
-- **Data & Pipeline Tests:** PDS4/FITS metadata parsing, coordinate bounds, longitude convention normalization, unit consistency, duplicate detection, footprint validity, division-by-zero guards, synthetic/real separation.
-- **ML Tests:** Deterministic runs across fixed seeds, synthetic anomaly-injection checks, silhouette/stability smoke tests.
-- **Backend API Tests:** Pydantic schema validation, pagination, GeoJSON `FeatureCollection` validity, error responses.
-- **Frontend Tests:** API contract validation (Zod), map layer controls, empty/error states, accessibility, end-to-end observation selection.
+- **Backend & Pipeline Tests (`backend/tests/`, Implemented):** Schema-faithful FITS/ASCII parsing, division-by-zero and withheld-element guards, SQLite loading, pagination, and `/api/v1` contract verification via `pytest`, `ruff`, and `mypy`.
+- **Frontend UI & Contract Tests (`frontend/src/test/`, Implemented):** `vitest` + React Testing Library + Zod runtime schema validation (`13` tests across `4` test suites) covering routing, accessibility, offline/validation error handling, spectral switching, asymmetric abundances, comparison guards, unavailable `LunarExplorer` (`available: false`), and ISRO / CC BY 4.0 attribution.
+- **ML & Geospatial Map Tests (Planned):** Deterministic clustering/anomaly runs across fixed seeds, synthetic anomaly injections, and GeoJSON/Leaflet layer controls once geolocated PRADAN data arrives.
 
 See [docs/TESTING_STRATEGY.md](docs/TESTING_STRATEGY.md).
 
@@ -480,11 +494,12 @@ See [docs/TESTING_STRATEGY.md](docs/TESTING_STRATEGY.md).
 ## 23. Roadmap
 
 - [x] **Phase 0 — Feasibility and documentation** *(Completed)*
-- [x] **Phase 1 — Real CLASS data ingestion, database foundation, and FastAPI backend** *(Implemented in `feature/real-data-backend`)*
-- [ ] **Phase 2 — Geolocated ISSDC/PRADAN dataset expansion**
+- [x] **Phase 1 — Real CLASS data ingestion, database foundation, and FastAPI backend** *(Implemented & merged into `develop`)*
+- [x] **Phase 2 (Frontend Explorer) — React + TypeScript real-data UI integrated with Phase 1 backend** *(Implemented in `feature/real-data-frontend`)*
+- [ ] **Phase 2 (Data Expansion) — Geolocated ISSDC/PRADAN dataset expansion** *(Planned)*
 - [ ] **Phase 3 — Extended backend contracts (GeoJSON map & region comparison)**
 - [ ] **Phase 4 — ML baselines (clustering & quality-aware anomaly detection)**
-- [ ] **Phase 5 — Frontend and 2D lunar map**
+- [ ] **Phase 5 — Interactive 2D lunar map & ML layer overlays (Leaflet)** *(Boundary ready in `/explorer`)*
 - [ ] **Phase 6 — Integration and end-to-end testing**
 - [ ] **Phase 7 — Documentation, demonstration, and final submission**
 - [ ] **Phase 8 — Optional extensions** *(Post-MVP only)*

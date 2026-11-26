@@ -4,15 +4,15 @@
 | --- | --- |
 | **Document** | `docs/API_SPECIFICATION.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Phase 1 Real-Data Endpoints Implemented; Geospatial & ML Endpoints Proposed` |
+| **Status** | `Active — Phase 1 Backend Endpoints & Phase 2 Frontend Zod Consumers Implemented; Geospatial & ML Endpoints Proposed` |
 | **Owner** | `[Member 4 Name Placeholder]` |
-| **Last updated** | `2026-11-24` |
+| **Last updated** | `2026-11-26` |
 | **Reviewers** | `[Member 3 Name Placeholder]`, `[Member 1 Name Placeholder]` |
 
 ---
 
 > [!NOTE]
-> **Implementation Status:** Core Phase 1 endpoints (`/health`, `/datasets`, `/datasets/{dataset_id}`, `/dataset/summary`, `/elements`, `/observations`, `/observations/{observation_id}`, `/observations/{observation_id}/spectra`, `/observations/{observation_id}/abundances`, `/observations/{observation_id}/line-fluxes`, and `/map/availability`) are **Implemented** in `backend/app/api/routes/` serving genuine Chandrayaan-2 CLASS data (`DOI: 10.17632/6mmd96j5bg.1`, `data_origin: "mission"`). Because this dataset lacks verified coordinates, `/api/v1/map/availability` returns `available: false` and `/api/v1/map/observations` remains **Proposed**.
+> **Implementation Status:** Core Phase 1 endpoints (`/health`, `/datasets`, `/datasets/{dataset_id}`, `/dataset/summary`, `/elements`, `/observations`, `/observations/{observation_id}`, `/observations/{observation_id}/spectra`, `/observations/{observation_id}/abundances`, `/observations/{observation_id}/line-fluxes`, and `/map/availability`) are **Implemented** in `backend/app/api/routes/` serving genuine Chandrayaan-2 CLASS data (`DOI: 10.17632/6mmd96j5bg.1`, `data_origin: "mission"`), and are validated at runtime by the Phase 2 React frontend via Zod schemas in [`../frontend/src/api/schemas.ts`](../frontend/src/api/schemas.ts) (with backend CORS defaulting to `FRONTEND_URL=http://localhost:5173`). Because this dataset lacks verified coordinates, `/api/v1/map/availability` returns `available: false` and `/api/v1/map/observations` remains **Proposed**.
 
 ---
 

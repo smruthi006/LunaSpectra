@@ -4,15 +4,22 @@
 | --- | --- |
 | **Document** | `docs/FRONTEND_SPECIFICATION.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Planned — Planning Phase (No UI Implemented Yet)` |
+| **Status** | `Implemented — Phase 2 Real-Data Explorer (Leaflet Map Pending PRADAN Data)` |
 | **Owner** | `[Member 3 Name Placeholder]` |
-| **Last updated** | `2026-11-24` |
+| **Last updated** | `2026-11-26` |
 | **Reviewers** | `[Member 4 Name Placeholder]`, `[Member 2 Name Placeholder]` |
 
 ---
 
 > [!NOTE]
-> All pages, layouts, and component interactions below are **Planned**. Visual screenshots do not exist yet; any UI previews added before Phase 5 must be explicitly labelled **Mockup**.
+> **Phase 2 Implementation Status:** The React + TypeScript + Vite SPA under [`frontend/`](../frontend/README.md) is **Implemented** and integrated with all 11 live FastAPI Phase 1 endpoints using Zod runtime contract schemas (`frontend/src/api/schemas.ts`) and TanStack Query hooks (`frontend/src/api/queries.ts`). Pages `Home`, `Dashboard`, `Observations`, `ObservationDetail`, `Compare`, `Methodology`, and `DataSources` display genuine Chandrayaan-2 CLASS data (`DOI: 10.17632/6mmd96j5bg.1`), while `LunarExplorer` inspects `/api/v1/map/availability` and renders an explicit unavailable disclosure when `available: false`. Live screenshots captured from the running app are stored in `assets/images/` (**not mockups**):
+> - [`../assets/images/dashboard.png`](../assets/images/dashboard.png)
+> - [`../assets/images/observation_detail_20191118.png`](../assets/images/observation_detail_20191118.png)
+> - [`../assets/images/observation_detail_20200529.png`](../assets/images/observation_detail_20200529.png)
+> - [`../assets/images/comparison.png`](../assets/images/comparison.png)
+> - [`../assets/images/lunar_explorer_unavailable.png`](../assets/images/lunar_explorer_unavailable.png)
+>
+> Interactive Leaflet lunar map rendering and unsupervised ML overlays remain **Deferred/Planned** pending verified geolocated ISSDC/PRADAN products.
 
 ---
 

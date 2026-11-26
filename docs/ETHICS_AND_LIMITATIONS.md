@@ -4,9 +4,9 @@
 | --- | --- |
 | **Document** | `docs/ETHICS_AND_LIMITATIONS.md` |
 | **Version** | `0.1.0` |
-| **Status** | `Active — Updated for Phase 1 Real Dataset` |
+| **Status** | `Active — Updated for Phase 2 Real-Data Frontend` |
 | **Owner** | `[All 4 Team Members Placeholder]` |
-| **Last updated** | `2026-11-24` |
+| **Last updated** | `2026-11-26` |
 | **Reviewers** | `[Faculty Guide Name Placeholder]` |
 
 ---
@@ -29,6 +29,14 @@ LunaSpectra handles real planetary-science concepts and must uphold strict acade
 7. **No Implied Global Lunar Coverage:** Lunar observations must be displayed as discrete measured points or orbital footprints. Visual interpolation or heatmaps that imply every lunar pixel was measured are prohibited.
 8. **Synthetic vs. Mission Data Separation:** Synthetic fixtures created for software testing or early UI prototyping must carry `data_origin = "synthetic"`, reside separately (`data/sample/`), and trigger a visible warning banner in the UI.
 9. **Zero Fabricated Metrics or Statuses:** No model accuracy, latency, dataset size, observation count, test count, or scientific conclusion may be invented before empirical execution and verification.
+
+### UI Enforcement of Scientific Honesty (Phase 2)
+
+The Phase 2 frontend enforces these boundaries directly in rendered components:
+- When `/api/v1/map/availability` returns `available: false`, `/explorer` displays an explicit unavailability explanation and renders zero lunar map markers.
+- When `CLASS_20191118` abundance rows are empty (`181120/R2_abundance.txt` element-label mismatch), `/observations/CLASS_20191118` and `/compare` display the limitation notice instead of guessing values or computing synthetic abundance deltas.
+- Multi-row line fluxes (`flux_29may.txt` 3 rows per element) are displayed verbatim as min–max ranges on `/compare` rather than silently averaging rows.
+- API failures render visible `ErrorState` / `Backend offline` alerts with zero fallback to mocked frontend datasets.
 
 ---
 
